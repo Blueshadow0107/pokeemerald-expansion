@@ -20,6 +20,7 @@
     }
   ],
   "object_events": [
+
     {
       "local_id": "LOCALID_LITTLEROOT_TWIN",
       "graphics_id": "OBJ_EVENT_GFX_TWIN",

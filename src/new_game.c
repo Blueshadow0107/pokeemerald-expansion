@@ -48,6 +48,7 @@
 #include "union_room_chat.h"
 #include "constants/map_groups.h"
 #include "constants/items.h"
+#include "constants/vars.h"
 #include "difficulty.h"
 #include "follower_npc.h"
 
@@ -132,12 +133,13 @@ static void ClearFrontierRecord(void)
     gSaveBlock2Ptr->frontier.opponentNames[1][0] = EOS;
 }
 
+// Zoroark Forest Mystery - Warp to shrine instead of truck
 static void WarpToTruck(void)
 {
     if (IS_FRLG)
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
     else
-        SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
+        SetWarpDestination(MAP_GROUP(MAP_ZOROARK_SHRINE), MAP_NUM(MAP_ZOROARK_SHRINE), 0, 10, 14);
     WarpIntoMap();
 }
 
@@ -197,6 +199,19 @@ void NewGameInitData(void)
     InitLotadSizeRecord();
     gPlayerPartyCount = 0;
     ZeroPlayerPartyMons();
+    // Zoroark Forest Mystery - Give Rowlet as starter and set player name
+    CreateMon(&gPlayerParty[0], SPECIES_ROWLET, 15, USE_RANDOM_IVS, OTID_STRUCT_PRESET(0));
+    gPlayerPartyCount = 1;
+    // Set player name to "cyanide"
+    {
+        const u8 name[] = _("cyanide");
+        u8 i;
+        for (i = 0; i < PLAYER_NAME_LENGTH; i++)
+            gSaveBlock2Ptr->playerName[i] = name[i];
+        gSaveBlock2Ptr->playerName[PLAYER_NAME_LENGTH] = EOS;
+    }
+    // Skip intro cutscene
+    VarSet(VAR_ZOROARK_STORY_STATE, 1);
     ResetPokemonStorageSystem();
     DeactivateAllRoamers();
     gSaveBlock1Ptr->registeredItem = ITEM_NONE;

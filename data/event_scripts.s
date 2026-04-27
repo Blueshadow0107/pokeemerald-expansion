@@ -1043,6 +1043,9 @@ gStdScripts_End::
 	.include "data/scripts/pkmn_center_nurse_frlg.inc"
 
 .endif
+	.include "data/maps/ZoroarkShrine/scripts.inc"
+	.include "data/maps/ZoroarkWoods/scripts.inc"
+	.include "data/maps/ZoroarkTree/scripts.inc"
 
 	.include "data/scripts/std_msgbox.inc"
 	.include "data/scripts/trainer_battle.inc"

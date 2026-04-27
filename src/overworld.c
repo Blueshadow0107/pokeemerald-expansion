@@ -1875,6 +1875,7 @@ static bool8 RunFieldCallback(void)
     return TRUE;
 }
 
+// Zoroark Forest Mystery - Start in shrine instead of truck
 void CB2_NewGame(void)
 {
     FieldClearVBlankHBlankCallbacks();
@@ -1888,8 +1889,10 @@ void CB2_NewGame(void)
     if (IS_FRLG)
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     else
-        gFieldCallback = ExecuteTruckSequence;
+        gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     gFieldCallback2 = NULL;
+    // Warp to Zoroark Shrine starting position
+    SetWarpDestination(MAP_GROUP(MAP_ZOROARK_SHRINE), MAP_NUM(MAP_ZOROARK_SHRINE), 0, 10, 14);
     DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);

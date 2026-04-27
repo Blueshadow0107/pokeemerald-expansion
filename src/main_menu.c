@@ -1090,8 +1090,11 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
 
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
-            gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
-            break;
+            // Skip Birch speech and go directly to game
+            DestroyTask(taskId);
+            FreeAllWindowBuffers();
+            SetMainCallback2(CB2_NewGame);
+            return;
         case ACTION_CONTINUE:
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
